@@ -17,9 +17,11 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        $superAdminRole = Role::firstOrCreate(['name' => 'superAdmin']);
-        $bibliothecaryRole = Role::firstOrCreate(['name' => 'bibliothecary']);
-        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $superAdminRole = Role::firstOrCreate(['name' => 'superAdmin', 'guard_name' => 'sanctum']);
+        $bibliothecaryRole = Role::firstOrCreate(['name' => 'bibliothecary', 'guard_name' => 'sanctum']);
+        $userRole = Role::firstOrCreate(['name' => 'user', 'guard_name' => 'sanctum']);
+        $pruebaRole = Role::firstOrCreate(['name' => 'prueba', 'guard_name' => 'sanctum']);
+       
 
         // Crear un usuario super administrador
         $admin = User::create([
