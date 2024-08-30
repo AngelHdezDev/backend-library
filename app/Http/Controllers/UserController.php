@@ -11,15 +11,13 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // Asegúrate de que solo un superAdmin pueda acceder a estos métodos
         $this->middleware('role:superAdmin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
     {
-        // Mostrar todos los usuarios para el superAdmin
         $users = User::all();
-        return view('users.index', compact('users'));
+        return response()->json($users);
     }
 
     public function create()
