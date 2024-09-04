@@ -19,6 +19,11 @@ class LoginController extends Controller
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'user' => [
+                    'id' => $user->id,
+                    'email' => $user->email,
+                    'role' => $user->roles->first()->name // Asumiendo que tienes una relación con roles
+                ]
             ]);
         }
 

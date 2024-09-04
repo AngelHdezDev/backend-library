@@ -66,7 +66,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:6|confirmed',
+            'password' => 'nullable|min:6',
             'role' => 'required|exists:roles,name',
         ]);
 
@@ -74,16 +74,23 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password ? Hash::make($request->password) : $user->password,
+            'role' => $request->role,
         ]);
 
         $user->syncRoles($request->role);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return response()->json([
+            'message' => 'User edited successfully.',
+            'user' => $user
+        ], 201);
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return response()->json([
+            'message' => 'User elimitaned successfully.',
+            'user' => $user
+        ], 201);
     }
 }
